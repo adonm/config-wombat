@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>stlite app</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/browse/@stlite/mountable@0.38.0/build/stlite.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/browse/@stlite/mountable@0.38.0/build/stlite.js"></script>
+    <script>
+      stlite.mount(
+        `
+import streamlit as st
+import numpy as np
+import pandas as pd
+
+st.title("Secure Config Assessment Utility")
+st.header("Load csvs and json files for interpretation.")
+st.markdown("""
+    This tool should interpret and produce a summary output of some well known tools
+    aligned with the ACSC ISM.
+""")
+
+csvfiles = st.file_uploader("Please upload files to interpret:", accept_multiple_files=True, type={"csv"})
+
+csvs = []
+for inputfile in csvfiles:
+    csvs.append(pd.read_csv(inputfile))
+
+for csv in csvs:
+    st.dataframe(csv)
+`,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
